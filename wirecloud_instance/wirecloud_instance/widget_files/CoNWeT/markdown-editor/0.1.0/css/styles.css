@@ -1,0 +1,47 @@
+html, body {
+	margin: 0px;
+	padding: 0px;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+}
+
+.CodeMirror {
+	border-left: none;
+	border-right: none;
+	flex-grow: 1;
+	flex-shrink: 1;
+	border-radius: 0px;
+}
+
+.CodeMirror, .CodeMirror-scroll {
+	min-height: 0px;
+}
+
+.CodeMirror-fullscreen {
+	border-bottom: none;
+}
+
+.editor-preview-side {
+    border-right: none;
+    bottom:36px;
+}
+
+.editor-toolbar {
+    border: none;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.editor-statusbar {
+	flex-grow: 0;
+	flex-shrink: 0;
+}
+

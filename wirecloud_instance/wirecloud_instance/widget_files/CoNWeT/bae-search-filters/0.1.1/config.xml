@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<widget xmlns="http://wirecloud.conwet.fi.upm.es/ns/macdescription/1" vendor="CoNWeT" name="bae-search-filters" version="0.1.1">
+  <details>
+    <title>BAE Search Filters</title>
+    <homepage>https://github.com/Wirecloud/bae-search-filters-widget</homepage>
+    <authors>Jaime Pajuelo</authors>
+    <email>jpajuelo@conwet.com</email>
+    <image></image>
+    <smartphoneimage></smartphoneimage>
+    <description>Choose filters for BAE's offerings.</description>
+    <longdescription>DESCRIPTION.md</longdescription>
+    <changelog>doc/changelog.md</changelog>
+    <doc>doc/userguide.md</doc>
+    <license>Apache-2.0</license>
+    <issuetracker>https://github.com/Wirecloud/bae-search-filters-widget/issues</issuetracker>
+  </details>
+  <requirements></requirements>
+  <preferences>
+    <preference name="server_url" type="text" label="Server URL" description="URL of the BAE server."/>
+  </preferences>
+  <wiring>
+    <outputendpoint name="filters" type="text" label="Filters" description="JSON String. Search filters selected." friendcode="filters"/>
+  </wiring>
+  <contents src="index.html"/>
+  <rendering height="300px" width="30%"/>
+</widget>

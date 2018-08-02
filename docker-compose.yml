@@ -1,0 +1,158 @@
+version: '2'
+
+services:
+ iot-mongo:
+  container_name: iot-mongo
+  image: mongo:3.4
+  #environment:
+   #- MONGO_INITDB_ROOT_USERNAME=root
+   #- MONGO_INITDB_ROOT_PASSWORD=root
+  command: mongod --nojournal --bind_ip 0.0.0.0
+  ports:
+   - "27017:27017"
+  volumes:
+   - './mongo_data:/data/db' 
+ mongo-cygnus:
+  container_name: mongo-cygnus
+  image: mongo:3.4
+  #environment:
+   #- MONGO_INITDB_ROOT_USERNAME=mongo-cygnus
+   #- MONGO_INITDB_ROOT_PASSWORD=synchronicity-3n5-prototype
+  command: mongod --nojournal --bind_ip 0.0.0.0 --port 27018
+  ports:
+   - "3000:27018"
+  volumes:
+   - './mongo_data_cygnus:/data/db' 
+ mongo-iota-manager:
+  container_name: mongo-iota-manager
+  image: mongo:3.4
+  #environment:
+   #- MONGO_INITDB_ROOT_USERNAME=root
+   #- MONGO_INITDB_ROOT_PASSWORD=root
+  command: mongod --nojournal --bind_ip 0.0.0.0 --port 27019
+  ports:
+   - "27019:27019"
+  volumes:
+   - './mongo_data_iota_manager:/data/db'  
+ mongo-iota-ul:
+  container_name: mongo-iota-ul
+  image: mongo:3.4
+   #environment:
+    #- MONGO_INITDB_ROOT_USERNAME=root
+    #- MONGO_INITDB_ROOT_PASSWORD=root
+  command: mongod --nojournal --bind_ip 0.0.0.0 --port 27020
+  ports:
+   - "27020:27020"
+  volumes:
+   - './mongo_data_iota_ul:/data/db' 
+ #mongo-iota-json:
+  #image: mongo:3.4
+  #environment:
+   #- MONGO_INITDB_ROOT_USERNAME=root
+   #- MONGO_INITDB_ROOT_PASSWORD=root
+  #command: mongod --nojournal --bind_ip 0.0.0.0  --port 27021
+  #ports:
+   #- "27021:27021" 
+ orion:
+  container_name: orion
+  image: fiware/orion
+  ports:
+   - "1026:1026"
+  #command: -dbhost iot-mongo -dbuser root -dbpwd root -logLevel DEBUG
+  command: -dbhost iot-mongo -logLevel DEBUG
+  #environment:
+   #- no_proxy='localhost,172.17.0.4'
+ cygnus:
+  container_name: cygnus
+  image: fiware/cygnus-ngsi
+  ports:
+   - "5000:8081"
+   - "5050:5050"
+  environment:
+   - CYGNUS_LOG_LEVEL=DEBUG
+   - CYGNUS_LOG_APPENDER=console
+   - CYGNUS_MONGO_USER=
+   - CYGNUS_MONGO_PASS=
+   - CYGNUS_MONGO_HOSTS=mongo-cygnus:27018
+   - CYGNUS_API_PORT=8081
+  volumes:
+   - './agent.conf:/opt/apache-flume/conf/agent.conf'
+ sth-comet:
+  container_name: sth-comet
+  image: synchronicityiot/sth-comet-synchronicity
+  ports: 
+   - "8666:8666"
+  environment:
+   - DB_URI=mongo-cygnus:27018
+   #- DB_USERNAME=
+   #- DB_PASSWORD=
+   - STH_HOST=0.0.0.0
+ #mosquitto:
+  #image: eclipse-mosquitto
+  #ports:
+   #- "1883:1883"
+   #- "9001:9001"
+ iota-ul:
+  container_name: iota-ul
+  image: telefonicaiot/iotagent-ul
+  ports:
+   - "3389:7896"
+   - "9091:4041"
+  environment:
+   - IOTA_CB_HOST=orion
+   - IOTA_CB_PORT=1026
+   - IOTA_PROVIDER_URL='172.17.0.4:4041'
+   - IOTA_MONGO_HOST=mongo-iota-ul
+   - IOTA_MONGO_PORT=27020
+   - IOTA_MQTT_HOST=mosquitto
+   - IOTA_MQTT_PORT=1883
+   #- no_proxy='localhost,172.17.0.4,orion,mosquitto'
+  volumes:
+   - './client-config.js:/opt/iotaul/client-config.js'
+ #iota-json:
+  #image: fiware/iotagent-json
+  #ports:
+   #- "4042:4042"
+  #environment:
+   #- IOTA_CB_HOST=orion
+   #- IOTA_CB_PORT=1026
+   #- IOTA_NORTH_HOST=4042
+   #- IOTA_PROVIDER_URL='172.17.0.7:4041'
+   #- IOTA_MONGO_HOST=mongo-iota-json
+   #- IOTA_MONGO_PORT=27021
+   #- IOTA_MQTT_HOST=mosquitto
+   #- IOTA_MQTT_PORT=1883
+   #- no_proxy='localhost,172.17.0.4,orion,mosquitto'
+  #volumes:
+   #- './client-config.js:/opt/iotajson/client-config.js'
+ iota-manager:
+  container_name: iota-manager
+  image: telefonicaiot/iotagent-manager
+  ports:
+   - "9090:4040"
+  environment:
+   - IOTA_SERVER_PORT=4040
+   - IOTA_MONGO_HOST=mongo-iota-manager
+   - IOTA_MONGO_PORT=27019
+   - IOTA_LOG_LEVEL=DEBUG
+   #- no_proxy='localhost,172.17.0.4,orion,mosquitto,iota-ul,iota-json'
+ idm-keyrock:
+  container_name: idm-keyrock
+  image: fiware/idm
+  ports:
+   - "8000:8000"
+   - "8001:5000"
+  volumes:
+   - './local_settings.py:/horizon/openstack_dashboard/local/local_settings.py'
+ #pep-proxy:
+  #container_name: pep-proxy
+  #image: fiware/pep-proxy
+  #ports:
+   #- "444:444"
+   #- "81:81"
+  #volumes:
+   #- './config.js:/opt/fiware-pep-proxy/config.js'
+networks:
+ default:
+  external:
+   name: main_scsk

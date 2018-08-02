@@ -1,0 +1,1 @@
+The BAE Browser Widget is a WireCloud widget that provides the ability to browse, filter and install the Wirecloud offerings available at a Bussiness API Ecosystem instance in a simple widget, easily configured by just providing the BAE instance's URL.

@@ -1,0 +1,15 @@
+body {
+	flex-direction: column;
+	display: flex;
+}
+
+.btn-info {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+body:hover .btn-info {
+	opacity: 1;
+	z-index: 2000;
+}

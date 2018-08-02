@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<widget xmlns="http://wirecloud.conwet.fi.upm.es/ns/macdescription/1" vendor="CoNWeT" name="markdown-viewer" version="0.1.1">
+
+    <details>
+        <title>Markdown viewer widget</title>
+        <homepage>https://github.com/Wirecloud/markdown-viewer-widget</homepage>
+        <authors>Alejandro Rodríguez</authors>
+        <email>alex.rodriguez@conwet.com</email>
+        <image>images/markdownlogo.svg</image>
+        <smartphoneimage></smartphoneimage>
+        <description>Display markdown texts</description>
+        <longdescription>DESCRIPTION.md</longdescription>
+        <changelog>doc/changelog.md</changelog>
+        <doc>doc/userguide.md</doc>
+        <license>Apache-2.0</license>
+        <issuetracker>https://github.com/Wirecloud/markdown-viewer-widget/issues</issuetracker>
+    </details>
+
+    <requirements>
+        <feature name="DashboardManagement"/>
+        <feature name="StyledElements"/>
+    </requirements>
+
+    <preferences>
+        <preference name="save" label="Store markdown" description="Store current markdown on the server to load it by default" type="boolean" default="true"/>
+    </preferences>
+
+    <persistentvariables>
+        <variable name="initialMarkdownValue" type="text"/>
+    </persistentvariables>
+
+    <wiring>
+        <inputendpoint name="input" type="text" label="Markdown input" description="Markdown text" friendcode="markdown"/>
+    </wiring>
+
+    <contents src="index.html" useplatformstyle="true" />
+    <rendering height="300px" width="30%"/>
+
+</widget>

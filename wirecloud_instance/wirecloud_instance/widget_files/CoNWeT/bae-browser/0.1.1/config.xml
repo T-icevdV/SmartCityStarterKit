@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<widget xmlns="http://wirecloud.conwet.fi.upm.es/ns/macdescription/1" vendor="CoNWeT" name="bae-browser" version="0.1.1">
+  <details>
+    <title>BAE Browser</title>
+    <homepage>https://github.com/Wirecloud/bae-browser-widget</homepage>
+    <authors>Jaime Pajuelo</authors>
+    <email>jpajuelo@conwet.com</email>
+    <image></image>
+    <smartphoneimage></smartphoneimage>
+    <description>Browse and check BAE offerings .</description>
+    <longdescription>DESCRIPTION.md</longdescription>
+    <changelog>doc/changelog.md</changelog>
+    <doc>doc/userguide.md</doc>
+    <license>Apache-2.0</license>
+    <issuetracker>https://github.com/Wirecloud/bae-browser-widget/issues</issuetracker>
+  </details>
+  <requirements>
+    <feature name="DashboardManagement"/>
+    <feature name="ComponentManagement"/>
+  </requirements>
+  <preferences>
+    <preference name="server_url" type="text" label="Server URL" description="URL of the BAE server."/>
+  </preferences>
+  <wiring>
+  </wiring>
+  <contents src="index.html" useplatformstyle="true"/>
+  <rendering height="300px" width="30%"/>
+</widget>
