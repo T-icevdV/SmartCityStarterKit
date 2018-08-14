@@ -1,6 +1,37 @@
 version: '2'
 
 services:
+ knowage:
+  image: knowagelabs/knowage-server-docker:develop
+  networks:
+    - default
+    #default:
+      #external:
+        #- main_scsk
+  ports:
+    - "8080:8080"
+  environment:
+    - WAIT_MYSQL=true
+    - PUBLIC_ADDRESS=localhost
+    - DB_PORT_3306_TCP_ADDR=db
+    - DB_PORT_3306_TCP_PORT=3306
+    - DB_ENV_MYSQL_USER=knowageuser
+    - DB_ENV_MYSQL_PASSWORD=knowagepassword
+    - DB_ENV_MYSQL_DATABASE=knowagedb
+
+ knowagedb:
+  image: mysql:5.5
+  hostname: db
+  networks:
+    default:
+      aliases:
+        - db
+  environment:
+    - MYSQL_USER=knowageuser
+    - MYSQL_PASSWORD=knowagepassword
+    - MYSQL_DATABASE=knowagedb
+    - MYSQL_ROOT_PASSWORD=knowagerootpassword
+
  iot-mongo:
   container_name: iot-mongo
   image: mongo:3.4
@@ -62,6 +93,8 @@ services:
   command: -dbhost iot-mongo -logLevel DEBUG
   #environment:
    #- no_proxy='localhost,172.17.0.4'
+  networks:
+    - default
  cygnus:
   container_name: cygnus
   image: fiware/cygnus-ngsi
