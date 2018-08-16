@@ -31,7 +31,8 @@ services:
     - MYSQL_PASSWORD=knowagepassword
     - MYSQL_DATABASE=knowagedb
     - MYSQL_ROOT_PASSWORD=knowagerootpassword
-
+  volumes:
+    - mysql_data:/var/lib/mysql
  iot-mongo:
   container_name: iot-mongo
   image: mongo:3.4
@@ -125,23 +126,23 @@ services:
   #ports:
    #- "1883:1883"
    #- "9001:9001"
- iota-ul:
-  container_name: iota-ul
-  image: telefonicaiot/iotagent-ul
-  ports:
-   - "3389:7896"
-   - "9091:4041"
-  environment:
-   - IOTA_CB_HOST=orion
-   - IOTA_CB_PORT=1026
-   - IOTA_PROVIDER_URL='172.17.0.4:4041'
-   - IOTA_MONGO_HOST=mongo-iota-ul
-   - IOTA_MONGO_PORT=27020
-   - IOTA_MQTT_HOST=mosquitto
-   - IOTA_MQTT_PORT=1883
-   #- no_proxy='localhost,172.17.0.4,orion,mosquitto'
-  volumes:
-   - './client-config.js:/opt/iotaul/client-config.js'
+ #iota-ul:
+  #container_name: iota-ul
+  #image: telefonicaiot/iotagent-ul
+  #ports:
+  # - "3389:7896"
+  # - "9091:4041"
+  #environment:
+  # - IOTA_CB_HOST=orion
+  # - IOTA_CB_PORT=1026
+  # - IOTA_PROVIDER_URL='172.17.0.4:4041'
+  # - IOTA_MONGO_HOST=mongo-iota-ul
+  # - IOTA_MONGO_PORT=27020
+  # - IOTA_MQTT_HOST=mosquitto
+  # - IOTA_MQTT_PORT=1883
+  # - no_proxy='localhost,172.17.0.4,orion,mosquitto'
+  #volumes:
+  # - './client-config.js:/opt/iotaul/client-config.js'
  #iota-json:
   #image: fiware/iotagent-json
   #ports:
@@ -158,25 +159,25 @@ services:
    #- no_proxy='localhost,172.17.0.4,orion,mosquitto'
   #volumes:
    #- './client-config.js:/opt/iotajson/client-config.js'
- iota-manager:
-  container_name: iota-manager
-  image: telefonicaiot/iotagent-manager
-  ports:
-   - "9090:4040"
-  environment:
-   - IOTA_SERVER_PORT=4040
-   - IOTA_MONGO_HOST=mongo-iota-manager
-   - IOTA_MONGO_PORT=27019
-   - IOTA_LOG_LEVEL=DEBUG
-   #- no_proxy='localhost,172.17.0.4,orion,mosquitto,iota-ul,iota-json'
- idm-keyrock:
-  container_name: idm-keyrock
-  image: fiware/idm
-  ports:
-   - "8000:8000"
-   - "8001:5000"
-  volumes:
-   - './local_settings.py:/horizon/openstack_dashboard/local/local_settings.py'
+ #iota-manager:
+  #container_name: iota-manager
+  #image: telefonicaiot/iotagent-manager
+  #ports:
+   #- "9090:4040"
+  #environment:
+  # - IOTA_SERVER_PORT=4040
+  # - IOTA_MONGO_HOST=mongo-iota-manager
+  # - IOTA_MONGO_PORT=27019
+  # - IOTA_LOG_LEVEL=DEBUG
+  # - no_proxy='localhost,172.17.0.4,orion,mosquitto,iota-ul,iota-json'
+ #idm-keyrock:
+  #container_name: idm-keyrock
+  #image: fiware/idm
+  #ports:
+  # - "8000:8000"
+  # - "8001:5000"
+  #volumes:
+  # - './local_settings.py:/horizon/openstack_dashboard/local/local_settings.py'
  #pep-proxy:
   #container_name: pep-proxy
   #image: fiware/pep-proxy
