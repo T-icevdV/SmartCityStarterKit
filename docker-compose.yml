@@ -54,28 +54,28 @@ services:
    - "3000:27018"
   volumes:
    - './mongo_data_cygnus:/data/db' 
- mongo-iota-manager:
-  container_name: mongo-iota-manager
-  image: mongo:3.4
+ #mongo-iota-manager:
+  #container_name: mongo-iota-manager
+  #image: mongo:3.4
   #environment:
-   #- MONGO_INITDB_ROOT_USERNAME=root
-   #- MONGO_INITDB_ROOT_PASSWORD=root
-  command: mongod --nojournal --bind_ip 0.0.0.0 --port 27019
-  ports:
-   - "27019:27019"
-  volumes:
-   - './mongo_data_iota_manager:/data/db'  
- mongo-iota-ul:
-  container_name: mongo-iota-ul
-  image: mongo:3.4
+  # - MONGO_INITDB_ROOT_USERNAME=root
+  # - MONGO_INITDB_ROOT_PASSWORD=root
+  #command: mongod --nojournal --bind_ip 0.0.0.0 --port 27019
+  #ports:
+  # - "27019:27019"
+  #volumes:
+  # - './mongo_data_iota_manager:/data/db'  
+ #mongo-iota-ul:
+  #container_name: mongo-iota-ul
+  #image: mongo:3.4
    #environment:
     #- MONGO_INITDB_ROOT_USERNAME=root
     #- MONGO_INITDB_ROOT_PASSWORD=root
-  command: mongod --nojournal --bind_ip 0.0.0.0 --port 27020
-  ports:
-   - "27020:27020"
-  volumes:
-   - './mongo_data_iota_ul:/data/db' 
+  #command: mongod --nojournal --bind_ip 0.0.0.0 --port 27020
+  #ports:
+  # - "27020:27020"
+  #volumes:
+  # - './mongo_data_iota_ul:/data/db' 
  #mongo-iota-json:
   #image: mongo:3.4
   #environment:
