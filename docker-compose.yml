@@ -109,7 +109,7 @@ services:
    - CYGNUS_MONGO_HOSTS=mongo-cygnus:27018
    - CYGNUS_API_PORT=8081
   volumes:
-   - './agent.conf:/opt/apache-flume/conf/agent.conf'
+   - './agent.conf:/opt/fiware-cygnus/docker/cygnus-ngsi/agent.conf'
  sth-comet:
   container_name: sth-comet
   image: synchronicityiot/sth-comet-synchronicity
