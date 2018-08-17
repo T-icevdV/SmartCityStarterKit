@@ -32,7 +32,7 @@ services:
     - MYSQL_DATABASE=knowagedb
     - MYSQL_ROOT_PASSWORD=knowagerootpassword
   volumes:
-    - mysql_data:/var/lib/mysql
+    - ./mysql_data:/var/lib/mysql
  iot-mongo:
   container_name: iot-mongo
   image: mongo:3.4
