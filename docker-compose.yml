@@ -18,7 +18,6 @@ services:
     - DB_ENV_MYSQL_USER=knowageuser
     - DB_ENV_MYSQL_PASSWORD=knowagepassword
     - DB_ENV_MYSQL_DATABASE=knowagedb
-
  knowagedb:
   image: mysql:5.5
   hostname: db
@@ -32,7 +31,7 @@ services:
     - MYSQL_DATABASE=knowagedb
     - MYSQL_ROOT_PASSWORD=knowagerootpassword
   volumes:
-    - ./mysql_data:/var/lib/mysql
+    - './mysql_data:/var/lib/mysql'
  iot-mongo:
   container_name: iot-mongo
   image: mongo:3.4

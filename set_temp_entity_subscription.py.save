@@ -1,9 +1,0 @@
-import requests
-
-url = "http://localhost:5000/v1/subscriptions&ngsi_version=2"
-header = {"Content-Type": "application/json"}
-payload = '{"description":  "STH Subscription", "subject": { "entities": [ { "idPattern": ".*" } ] } , "notification": { "http": { "url": "http://cygnus:5050/notify" }, "attrsFormat": "legacy" }, "expires": "2040-01-01T14:00:00.00Z" }'
-
-r = requests.post(url, data = payload, headers = header)
-print(r.text)
-

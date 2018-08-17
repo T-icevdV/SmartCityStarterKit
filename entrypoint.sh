@@ -41,4 +41,9 @@ old_connection='url="jdbc:mysql://localhost:3306/knowagedb" username="knowageuse
 new_connection='url="jdbc:mysql://'${DB_HOST}':'${DB_PORT}'/'${DB_DB}'" username="'${DB_USER}'" password="'${DB_PASS}'"'
 sed -i "s|${old_connection}|${new_connection}|" ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/conf/server.xml
 
+#replace in web.xml
+old_subscription_notifier='192.168.28.183'
+new_subscription_notifier='knowage'
+sed -i "s|${old_subscription_notifier}|${new_subscription_notifier}|" /home/knowage/apache-tomcat-7.0.57/webapps/knowage/WEB-INF/web.xml
+
 exec "$@"
