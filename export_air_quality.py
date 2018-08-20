@@ -3,6 +3,7 @@ import json
 import math
 import requests
 import datetime
+import sys
 
 '''
 https://fiware-datamodels.readthedocs.io/en/latest/Environment/AirQualityObserved/doc/spec/index.html
@@ -119,7 +120,7 @@ def get_data_from_ckan():
         get_single_air_quality_station_info(item["fields"]["airbox_numbers_version_0_4"])
 
     orion_batch_update_entity = {
-        "actionType": "UPDATE",
+        "actionType": sys.argv[1],
         "entities": air_stations
     }
     # print(json.dumps(orion_batch_update_entity, indent=4, sort_keys=True))
