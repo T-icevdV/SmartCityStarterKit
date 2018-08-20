@@ -1,37 +1,6 @@
 version: '2'
 
 services:
- knowage:
-  image: knowagelabs/knowage-server-docker:develop
-  networks:
-    - default
-    #default:
-      #external:
-        #- main_scsk
-  ports:
-    - "8080:8080"
-  environment:
-    - WAIT_MYSQL=true
-    - PUBLIC_ADDRESS=localhost
-    - DB_PORT_3306_TCP_ADDR=db
-    - DB_PORT_3306_TCP_PORT=3306
-    - DB_ENV_MYSQL_USER=knowageuser
-    - DB_ENV_MYSQL_PASSWORD=knowagepassword
-    - DB_ENV_MYSQL_DATABASE=knowagedb
- knowagedb:
-  image: mysql:5.5
-  hostname: db
-  networks:
-    default:
-      aliases:
-        - db
-  environment:
-    - MYSQL_USER=knowageuser
-    - MYSQL_PASSWORD=knowagepassword
-    - MYSQL_DATABASE=knowagedb
-    - MYSQL_ROOT_PASSWORD=knowagerootpassword
-  volumes:
-    - './mysql_data:/var/lib/mysql'
  iot-mongo:
   container_name: iot-mongo
   image: mongo:3.4
@@ -43,17 +12,6 @@ services:
    - "27017:27017"
   volumes:
    - './mongo_data:/data/db' 
- mongo-cygnus:
-  container_name: mongo-cygnus
-  image: mongo:3.4
-  #environment:
-   #- MONGO_INITDB_ROOT_USERNAME=mongo-cygnus
-   #- MONGO_INITDB_ROOT_PASSWORD=synchronicity-3n5-prototype
-  command: mongod --nojournal --bind_ip 0.0.0.0 --port 27018
-  ports:
-   - "3000:27018"
-  volumes:
-   - './mongo_data_cygnus:/data/db' 
  #mongo-iota-manager:
   #container_name: mongo-iota-manager
   #image: mongo:3.4
@@ -95,31 +53,6 @@ services:
    #- no_proxy='localhost,172.17.0.4'
   networks:
     - default
- cygnus:
-  container_name: cygnus
-  image: fiware/cygnus-ngsi
-  ports:
-   - "5000:8081"
-   - "5050:5050"
-  environment:
-   - CYGNUS_LOG_LEVEL=DEBUG
-   - CYGNUS_LOG_APPENDER=console
-   - CYGNUS_MONGO_USER=
-   - CYGNUS_MONGO_PASS=
-   - CYGNUS_MONGO_HOSTS=mongo-cygnus:27018
-   - CYGNUS_API_PORT=8081
-  volumes:
-   - './agent.conf:/opt/fiware-cygnus/docker/cygnus-ngsi/agent.conf'
- sth-comet:
-  container_name: sth-comet
-  image: synchronicityiot/sth-comet-synchronicity
-  ports: 
-   - "8666:8666"
-  environment:
-   - DB_URI=mongo-cygnus:27018
-   #- DB_USERNAME=
-   #- DB_PASSWORD=
-   - STH_HOST=0.0.0.0
  #mosquitto:
   #image: eclipse-mosquitto
   #ports:
@@ -185,6 +118,39 @@ services:
    #- "81:81"
   #volumes:
    #- './config.js:/opt/fiware-pep-proxy/config.js'
+ grafana:
+  image: grafana/grafana
+  container_name: grafana
+  depends_on:
+   - crate-db
+  ports:
+   - "3003:3000"
+  environment:
+   - GF_INSTALL_PLUGINS=crate-datasource,grafana-clock-panel,grafana-worldmap-panel
+#  volumes:
+#   - './grafana:/var/lib/grafana'
+ crate-db:
+  image: crate:2.3
+  hostname: crate-db
+  container_name: db-crate
+  ports:
+   # Admin UI
+   - "4200:4200"
+   # Transport protocol
+   - "4300:4300"
+  command: -Ccluster.name=democluster -Chttp.cors.enabled=true -Chttp.cors.allow-origin="*"
+  volumes:
+   - './crate-db:/data'
+ quantum-leap:
+  image: smartsdk/quantumleap
+  hostname: quantum-leap
+  container_name: quantum-leap
+  ports:
+   - "8668:8668"
+  depends_on:
+   - crate-db
+  environment:
+   - CRATE_HOST=crate-db
 networks:
  default:
   external:
