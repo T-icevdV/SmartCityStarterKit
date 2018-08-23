@@ -4,6 +4,7 @@ import math
 import requests
 import datetime
 import sys
+import geohash
 
 '''
 https://fiware-datamodels.readthedocs.io/en/latest/Environment/AirQualityObserved/doc/spec/index.html
@@ -62,6 +63,7 @@ def create_air_station_list(data, station_url):
                 "type": "Point",
                 "coordinates": coord
             },
+            "geohash": geohash.encode(coord[1],coord[0]),
             "source": station_url,
             "relativeHumidity": data["last_measurement"]["calibrated"]["readings"]["RelHum"],
             "temperature": data["last_measurement"]["calibrated"]["readings"]["Temp"],
