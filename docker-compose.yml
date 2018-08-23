@@ -127,8 +127,9 @@ services:
    - "3003:3000"
   environment:
    - GF_INSTALL_PLUGINS=crate-datasource,grafana-clock-panel,grafana-worldmap-panel
-#  volumes:
-#   - './grafana:/var/lib/grafana'
+  user: "420"
+  volumes:
+   - './grafana:/var/lib/grafana'
  crate-db:
   image: crate:2.3
   hostname: crate-db
