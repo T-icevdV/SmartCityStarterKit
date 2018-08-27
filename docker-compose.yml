@@ -11,7 +11,8 @@ services:
   ports:
    - "27017:27017"
   volumes:
-   - './mongo_data:/data/db' 
+   - './mongo_data:/data/db'
+  restart: always
  #mongo-iota-manager:
   #container_name: mongo-iota-manager
   #image: mongo:3.4
@@ -53,6 +54,7 @@ services:
    #- no_proxy='localhost,172.17.0.4'
   networks:
     - default
+  restart: always
  #mosquitto:
   #image: eclipse-mosquitto
   #ports:
@@ -130,6 +132,7 @@ services:
   user: "420"
   volumes:
    - './grafana:/var/lib/grafana'
+  restart: always
  crate-db:
   image: crate:2.3
   hostname: crate-db
@@ -142,6 +145,7 @@ services:
   command: -Ccluster.name=democluster -Chttp.cors.enabled=true -Chttp.cors.allow-origin="*"
   volumes:
    - './crate-db:/data'
+  restart: always
  quantum-leap:
   image: smartsdk/quantumleap
   hostname: quantum-leap
@@ -152,6 +156,7 @@ services:
    - crate-db
   environment:
    - CRATE_HOST=crate-db
+  restart: always
 networks:
  default:
   external:
