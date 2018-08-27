@@ -2,6 +2,7 @@ version: '2'
 
 services:
  iot-mongo:
+  restart: always
   container_name: iot-mongo
   image: mongo:3.4
   #environment:
@@ -44,6 +45,7 @@ services:
   #ports:
    #- "27021:27021" 
  orion:
+  restart: always
   container_name: orion
   image: fiware/orion
   ports:
@@ -121,6 +123,7 @@ services:
   #volumes:
    #- './config.js:/opt/fiware-pep-proxy/config.js'
  grafana:
+  restart: always
   image: grafana/grafana
   container_name: grafana
   depends_on:
@@ -134,6 +137,7 @@ services:
    - './grafana:/var/lib/grafana'
   restart: always
  crate-db:
+  restart: always
   image: crate:2.3
   hostname: crate-db
   container_name: db-crate
@@ -147,6 +151,7 @@ services:
    - './crate-db:/data'
   restart: always
  quantum-leap:
+  restart: always
   image: smartsdk/quantumleap
   hostname: quantum-leap
   container_name: quantum-leap
