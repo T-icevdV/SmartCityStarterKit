@@ -47,15 +47,15 @@ When the installation is finished, please navigate to the installation directory
 
 You can check the status of the Docker containers using:
  $ sudo docker-compose ps
-
+ 
 It should look like this:
-    Name                  Command               State                            Ports
- ----------------------------------------------------------------------------------------------------------------
- db-crate       /docker-entrypoint.sh -Ccl ...   Up      0.0.0.0:4200->4200/tcp, 0.0.0.0:4300->4300/tcp, 5432/tcp
- grafana        /run.sh                          Up      0.0.0.0:3003->3000/tcp
- iot-mongo      docker-entrypoint.sh mongo ...   Up      0.0.0.0:27017->27017/tcp
- orion          /usr/bin/contextBroker -fg ...   Up      0.0.0.0:1026->1026/tcp
- quantum-leap   /bin/sh -c python app.py         Up      0.0.0.0:8668->8668/tcp
+   Name                  Command               State                            Ports
+----------------------------------------------------------------------------------------------------------------
+db-crate       /docker-entrypoint.sh -Ccl ...   Up      0.0.0.0:4200->4200/tcp, 0.0.0.0:4300->4300/tcp, 5432/tcp
+grafana        /run.sh                          Up      0.0.0.0:3003->3000/tcp
+iot-mongo      docker-entrypoint.sh mongo ...   Up      0.0.0.0:27017->27017/tcp
+orion          /usr/bin/contextBroker -fg ...   Up      0.0.0.0:1026->1026/tcp
+quantum-leap   /bin/sh -c python app.py         Up      0.0.0.0:8668->8668/tcp
 
 
 The new installation has some connections with airboxes in Eindhoven by default. This will help you to understand the purpose of the different Fiware components and to connect your own IOT-devices. A Grafana dashboard is available at http://{HOST-IP}:3003. You can login using the default Grafana credentials (admin/admin). You can navigate to the dashboard to see a map with all the airboxes in Eindhoven, as well as a graph that shows an example of historical airbox data. 
