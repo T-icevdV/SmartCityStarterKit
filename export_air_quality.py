@@ -6,43 +6,9 @@ import datetime
 import sys
 import geohash
 
-'''
-https://fiware-datamodels.readthedocs.io/en/latest/Environment/AirQualityObserved/doc/spec/index.html
-{
-  "id": "Madrid-AmbientObserved-28079004-2016-03-15T11:00:00",
-  "type": "AirQualityObserved",
-  "address": {
-    "addressCountry": "ES",
-    "addressLocality": "Madrid",
-    "streetAddress": "Plaza de España"
-  },
-  "dateObserved": "2016-03-15T11:00:00/2016-03-15T12:00:00",
-  "location": {
-    "type": "Point",
-    "coordinates": [-3.712247222222222, 40.423852777777775]
-  },
-  "source": "http://datos.madrid.es",
-  "precipitation": 0,
-  "relativeHumidity": 0.54,
-  "temperature": 12.2,
-  "windDirection": 186,
-  "windSpeed": 0.64,
-  "airQualityLevel": "moderate",
-  "reliability": 0.9,
-  "CO": 500,
-  "NO": 45,
-  "NO2": 69,
-  "NOx": 139,
-  "SO2": 11,
-  "CO_Level": "good",
-  "NO_Level": "moderate",
-  "refPointOfInterest": "28079004-Pza. de España"
-}
-'''
-
-air_quality_url = "https://data.eindhoven.nl/api/records/1.0/search/?dataset=realtime-luchtkwaliteit-in-eindhoven&rows=50"
+#air_quality_url = "https://data.eindhoven.nl/api/records/1.0/search/?dataset=realtime-luchtkwaliteit-in-eindhoven&rows=50"
+air_quality_url = "http://data.aireas.com/api/v2/airboxes"
 orion_url = "http://localhost:1026/v2/op/update?options=keyValues"
-# orion_url = "http://212.159.228.70:1026/v2/op/update?options=keyValues"
 
 air_stations = []
 error_list = []
@@ -118,8 +84,11 @@ def print_errors():
 
 def get_data_from_ckan():
     json_resp = requests.get(air_quality_url).json()
-    for item in json_resp["records"]:
-        get_single_air_quality_station_info(item["fields"]["airbox_numbers_version_0_4"])
+    #print(json_resp)
+    for item in json_resp:
+        url = "http://data.aireas.com/api/v2/airboxes/" + str(item["_id"]).replace(".0", "")
+        #print url
+        get_single_air_quality_station_info(url)
 
     orion_batch_update_entity = {
         "actionType": sys.argv[1],
